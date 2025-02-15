@@ -11,12 +11,29 @@
       <div class="container">
         <div class="title">会員認証</div>
         <div class="loginForm">
-          <div><label>会員ID</label> <input type="text" required /></div>
-          <div><label>パスワード</label><input type="password" required /></div>
-          <button>ログイン</button>
+          <div class="input"><label>会員ID</label> <input class="userId" id="userId" type="text" required /></div>
+          <div class="input"><label>パスワード</label><input class="userPw" id="userPw" type="password" required /></div>
+          <button class="loginBtn" id="loginBtn">ログイン</button>
           <p class="message"></p>
         </div>
       </div>
     </form>
   </body>
+  <script>
+    const idPattern = /^[0-9]{6}$/;
+    const pwPattern = /^[A-Za-z0-9]{8}$/;
+    let userId = document.getElementById("userId").value;
+    let userPw = document.getElementById("userPw").value;
+
+    document.getElementById("loginBtn").addEventListener("click", inputCheck);
+
+    function inputCheck() {
+      if (userId != idPattern) {
+        alert("IDは半角数字の6桁で入力お願いします。");
+      }
+      if (userPw != pwPattern) {
+        alert("PWは半角英字、数字の8桁で入力お願いします。");
+      }
+    }
+  </script>
 </html>

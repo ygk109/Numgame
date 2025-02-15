@@ -9,12 +9,26 @@
 }
 
 .container .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   background-color: green;
   font-weight: bold;
   width: 40%;
   height: 3%;
   align-content: center;
   border: 1px solid black;
+}
+
+.container .title button {
+  background-color: gray;
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+  width: 5%;
+  height: 100%;
+  border: 1px solid gray;
 }
 
 .container .gameForm {

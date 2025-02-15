@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.container .title {
+  background-color: green;
+  width: 25%;
+  height: 3%;
+  align-content: center;
+  border: 1px solid black;
+}
+
+.container .loginForm {
+  background-color: rgb(248, 245, 245);
+  width: 25%;
+  height: 20%;
+  align-content: center;
+  border: 1px;
+  border: 1px solid black;
+}

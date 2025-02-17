@@ -1,5 +1,5 @@
 package com.ksinfo.pointgame.dao;
 
-public class ResultDAO {
+public interface ResultDAO {
 
 }

@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="/css/login.css" />
   </head>
   <body>
-    <form class="loginInfo">
+    <form action="/cert" method="post" class="loginInfo">
       <div class="container">
         <div class="title">会員認証</div>
         <div class="loginForm">
-          <div class="input"><label>会員ID</label> <input class="userId" id="userId" type="text" required /></div>
-          <div class="input"><label>パスワード</label><input class="userPw" id="userPw" type="password" required /></div>
-          <button class="loginBtn" id="loginBtn">ログイン</button>
+          <div class="input"><label>会員ID</label> <input name="memberId" class="userId" id="userId" type="text" placeholder="ID" required /></div>
+          <div class="input"><label>パスワード</label><input name="memberPassword" class="userPw" id="userPw" type="password" placeholder="PW" required /></div>
+          <button type="submit" class="loginBtn" id="loginBtn">ログイン</button>
           <p class="message"></p>
         </div>
       </div>

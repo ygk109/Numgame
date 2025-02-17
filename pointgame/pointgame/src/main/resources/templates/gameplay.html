@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/gameplay.css" />
   </head>
   <body>
-    <form class="gamePlay">
+    <form action="/gameplay" method="get" class="gamePlay">
       <div class="container">
         <div class="title">
           数当てゲーム
@@ -15,7 +15,8 @@
         </div>
         <div class="gameForm">
           <div class="point">
-            <p>現在のポイント: <a>0</a></p>
+            <input type="hidden" name="memberId" th:value="${memberId}" />
+            <p>現在のポイント: <span th:text="${point}"></span></p>
           </div>
           <div class="inputHiddenNum">
             <label>隠れ数字</label>
@@ -24,7 +25,7 @@
           </div>
 
           <div class="inputNum">
-            <label>入力数字</label><input class="num" type="text" required />
+            <label>入力数字</label><input class="num" type="text" maxlength="3" required />
             <button class="checkBtn" id="checkBtn">確認</button>
           </div>
 

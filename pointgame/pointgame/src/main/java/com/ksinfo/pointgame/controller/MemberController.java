@@ -30,7 +30,7 @@ public class MemberController {
 	    	if(dbCheck) {
 	        	model.addAttribute("memberId", memberDto.getMemberId());
 	        	model.addAttribute("memberPassword", memberDto.getMemberPassword());
-	        	return "gameplay";
+	        	return "redirect:/gameplay?memberId=" + memberDto.getMemberId();
 	        	
 	        }else {
 	        	String errorMsg = "入力したID, PWが一致しません。";

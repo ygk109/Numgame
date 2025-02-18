@@ -22,9 +22,14 @@ public class GameController {
     	GameDTO gameDto = new GameDTO();
     	gameDto.setMemberId(memberId);
     	gameService.gameInfoInit(gameDto);
-    	
+    	//point information viewing
     	model.addAttribute("point", gameDto.getPoint());
-        System.out.println(gameDto.getPoint());
+        System.out.println("Controller Point: "+ gameDto.getPoint());
+        model.addAttribute("hiddenNum", gameDto.getHiddenNum());
+        
+        //game result viewing
+        model.addAttribute("gameResult", gameDto.getGameResult());
+        System.out.println("gameResult List: "+ gameDto.getGameResult());
         
     	return "gameplay";
     }

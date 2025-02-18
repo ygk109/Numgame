@@ -8,4 +8,6 @@ import com.ksinfo.pointgame.dto.GameDTO;
 @Mapper
 public interface PointDAO {
 	GameDTO getPointById(@Param("memberId") String memberId);
+
+	int setPointById(GameDTO gameDto);
 }

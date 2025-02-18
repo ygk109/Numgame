@@ -1,6 +1,7 @@
 package com.ksinfo.pointgame.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,18 @@ public class GameDTO {
     private int gameNum;       
     private String inputNum;
     private String result;
-	public String getMemberId() {
+	
+    private List<GameDTO> gameResult;
+    
+    public List<GameDTO> getGameResult() {
+        return gameResult;
+    }
+    
+    public void setGameResult(List<GameDTO> gameResult) {
+        this.gameResult = gameResult;
+    }
+    
+    public String getMemberId() {
 		return memberId;
 	}
 	public void setMemberId(String memberId) {

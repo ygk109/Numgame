@@ -11,7 +11,7 @@
       <div class="container">
         <div class="title">
           数当てゲーム
-          <button>X</button>
+          <button class="closeBtn">X</button>
         </div>
         <div class="gameForm">
           <div class="point">
@@ -21,7 +21,7 @@
           <div class="inputHiddenNum">
             <label>隠れ数字</label>
             <a>***</a>
-            <input class="hiddenNum" type="hidden" required />
+            <input name="hiddenNum" th:value="${hiddenNum}" class="hiddenNum" type="hidden" required />
           </div>
 
           <div class="inputNum">
@@ -36,55 +36,11 @@
               <th>入力情報</th>
               <th>判定結果</th>
             </tr>
-            <tr>
-              <td>1回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>2回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>3回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>4回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>5回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>6回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>7回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>8回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>9回目</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>10回目</td>
-              <td></td>
-              <td></td>
+            <tr th:each="gameResult, iterStat : ${gameResult}">
+              <td th:text="${iterStat.count} + '回目'"></td>
+              <!-- 1回目 ~ 10回目 -->
+              <td th:text="${gameResult.inputNum}"></td>
+              <td th:text="${gameResult.result}"></td>
             </tr>
           </table>
         </div>

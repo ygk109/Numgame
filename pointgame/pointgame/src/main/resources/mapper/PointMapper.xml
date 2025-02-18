@@ -16,17 +16,17 @@
     </select>
     
 	<!-- 当日ゲーム履歴がない場合、ポイント情報を初期化 -->
-	<!-- <update id="setPointById">
-       UPDATE POINTINFO	
-		SET game_count = #{game_count},	
-			game_act_flg = #{game_act_flg},
-			update_date = current_date,
-			hidden_num = #{hidden_num}
+	<update id="setPointById">
+       UPDATE POINTINFO
+		SET game_count = #{gameCount}	
+		  , game_act_flg = #{gameActFlg}
+		  , update_date = current_timestamp
+		  , hidden_num = #{hiddenNum}
 		WHERE member_id=#{memberId} and logical_del_flag='0'	
-    </update> -->
+    </update>
     
     <!-- ゲーム結果によってポイント情報をアップデート -->
-  <!--   <update id="setPointById">
+  <!--   <update id="setAddPointById">
 	   UPDATE POINTINFO	
 		SET point = #{point},	
 			game_count = #{game_count},

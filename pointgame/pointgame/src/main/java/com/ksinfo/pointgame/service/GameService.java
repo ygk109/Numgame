@@ -40,7 +40,7 @@ public class GameService {
 		
 		//1.3)レコード更新日が一致しない場合の処理	
 		if(pointSearchResult != null) {
-			if(!updateDate.toLocalDate().equals(LocalDate.now())) {
+			if(updateDate.toLocalDate().equals(LocalDate.now())) {
 				gameCount = 0;
 				gameActFlag = 0;
 				hiddenNum = createNum();
@@ -95,7 +95,7 @@ public class GameService {
             digits[i] = num;
             used[num] = true;
         }
-        System.out.println("생성된 난수번호:" + digits[0]*100 + digits[1]*10 + digits[2]*1);
+        System.out.println("생성된 난수번호:" + digits[0] + digits[1] + digits[2]);
         return "" + digits[0] + digits[1] + digits[2]; // String으로 변환하여 저장
     }
 }

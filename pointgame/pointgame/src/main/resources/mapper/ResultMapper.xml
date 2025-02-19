@@ -10,18 +10,19 @@
        		 , result				
 		FROM RESULTINFO				
 		WHERE member_id=#{memberId} 				
-		AND update_date = current_date			
+		AND DATE(update_date) = current_date			
 		AND logical_del_flag='0' 									
     </select>
     
     <update id="setResultById">
 	    UPDATE RESULTINFO				
-		SET game_count = #{gameCount},				
-			input_num = #{inputNum},		
-			result = #{result}		
-		WHERE member_id=#{memberId} 				
-		AND rec_update_date = current_date				
-		AND logical_del_flag='0' 		
+		SET game_count = 1
+		  , input_num = '156'
+		  , result = '1S'
+		  , update_date= now()
+		WHERE member_id='123456'				
+		AND DATE(update_date) = current_date				
+		AND logical_del_flag='0'; 			
     </update>
     		
 </mapper>

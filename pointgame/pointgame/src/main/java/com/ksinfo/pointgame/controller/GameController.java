@@ -48,16 +48,23 @@ public class GameController {
     	model.addAttribute("gameResult", sessionGameDto.getGameResult());
     	model.addAttribute("hiddenNum", sessionGameDto.getHiddenNum());
     	
-    	int gameCount = sessionGameDto.getGameCount() + 1;
-    	System.out.println("Game Count: " + gameCount);
-    	int gameActFlg = sessionGameDto.getGameActFlg();
-    	
+    	gameDto.setGameCount(sessionGameDto.getGameCount());
+    	gameDto.setGameActFlg(sessionGameDto.getGameActFlg());
+    	gameDto.setHiddenNum(sessionGameDto.getHiddenNum());
     	String inputNum = gameDto.getInputNum();
+    	
     	System.out.println("Hidden Number: "+ sessionGameDto.getHiddenNum());
     	System.out.println("User input Number: " + inputNum);
     	
-    	//result check method
-    	gameService.checkNum(gameDto, inputNum, sessionGameDto.getHiddenNum(), gameCount, gameActFlg);
+    	//game result viewing
+        model.addAttribute("gameResult", gameDto.getGameResult());
+        System.out.println("gameResult List: "+ gameDto.getGameResult());
+    	
+    	//result check service
+    	gameService.gamePlay(gameDto);
+    	
+    	model.addAttribute("gameResult", gameDto.getGameResult());
+    	model.addAttribute("point", gameDto.getPoint());
     	
     	return "gameplay";
     }

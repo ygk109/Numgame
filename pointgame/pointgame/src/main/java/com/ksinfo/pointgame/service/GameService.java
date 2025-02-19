@@ -29,6 +29,7 @@ public class GameService {
 		String hiddenNum = gameDto.getHiddenNum();
 		LocalDateTime updateDate = gameDto.getUpdateDate();
 		System.out.println("dto에 저장된 id: "+ memberId);
+		
 		//1.1)ポイント情報テーブル検索
 		GameDTO pointSearchResult = pointDao.getPointById(memberId);
 		System.out.println("pointSearch result: "+pointSearchResult);
@@ -46,10 +47,10 @@ public class GameService {
 				updateDate	= LocalDateTime.now();
 				
 				gameDto.setGameCount(gameCount);
-				gameDto.setGameCount(gameActFlag);
+				gameDto.setGameActFlg(gameActFlag);
 				gameDto.setHiddenNum(hiddenNum);
 				
-				int updateResult = pointDao.setPointById(gameDto);
+				int updateResult = pointDao.setPointById(memberId, gameDto);
 				//1.4) SQL状態が >0(正常)でない場合、メッセージ出力
 				if(updateResult > 0) {
 					System.out.println("Update Success");
@@ -67,10 +68,9 @@ public class GameService {
 				hiddenNum = pointSearchResult.getHiddenNum();
 				
 				gameDto.setGameCount(gameCount);
-				gameDto.setGameCount(gameActFlag);
+				gameDto.setGameActFlg(gameActFlag);
 				gameDto.setHiddenNum(hiddenNum);
 			}
-			
 			//2.1)当日のゲーム入力数、判定結果を取得するため、パラメータ04をして以下の機能を呼び出す。
 			List<GameDTO> gameResult = resultDao.getResultById(memberId);
 			gameDto.setGameResult(gameResult);
@@ -81,6 +81,7 @@ public class GameService {
 		System.out.println(errorMsg);
 		}
 	}
+	//Create random number method
     private String createNum() {
         Random random = new Random();
         int[] digits = new int[3];
@@ -98,23 +99,59 @@ public class GameService {
         return "" + digits[0] + digits[1] + digits[2];
     }
 
-    
+    //gamePlay 
+    public void gamePlay(GameDTO gameDto) {
+    	String memberId = gameDto.getMemberId();
+    	String inputNum = gameDto.getInputNum();
+    	String hiddenNum = gameDto.getHiddenNum();
+   		int gameCount = gameDto.getGameCount()+1;
+   		int gameActFlg = gameDto.getGameActFlg();
+   		String result = gameDto.getResult();
+   		
+    	
+    	//game result check method
+    	checkNum(gameDto, inputNum, hiddenNum, gameCount, gameActFlg);
+    	int point = gameDto.getPoint();
+    	System.out.println(point);
+    	
+    	//2. ゲーム結果履歴情報テーブル追加
+    	int updateResultInfo = resultDao.setResultById(memberId, gameCount, inputNum, result);
+    	if(updateResultInfo > 0) {
+    		System.out.println("(Save game)SQL Update Success");
+    		gameDto.setResult(result);
+    	}else {
+    		System.out.println("(Save game)システムエラーが発生しました。");
+    	}
+    	
+    	//3. ポイント情報テーブル更新
+    	int updatePointInfo = pointDao.setAddPointById(memberId, point, gameCount, gameActFlg);
+    	if(updatePointInfo > 0) {
+    		System.out.println("(Update Point)SQL Update Success");
+    		gameDto.setPoint(point);
+    	}else {
+    		System.out.println("(Update Point)システムエラーが発生しました。");
+    	}
+    	
+    }
+  
   //game result check method
    	public void checkNum(GameDTO gameDto, String inputNum, String hiddenNum, int gameCount, int gameActFlg){
    		int i;
    		int j;
    		int s= 0;
    		int b= 0;
-   		int k= gameCount;
-   		int flag = gameActFlg;
+   		
+
    		int finalResult;
+   		int currentPoint = gameDto.getPoint();
    		int point= 0;
-   		String resultMsg;
+   		
+   		String result;
    		
    		char[] input = new char[3];
    		char[] hidden = new char[3];
    		
-   		System.out.println(k + flag);
+   		System.out.println(gameCount + gameActFlg);
    		//game judge
    		for(i=0; i<3; i++) {
    			input[i]= inputNum.charAt(i);
@@ -140,53 +177,54 @@ public class GameService {
    		//はずれ=0, 当たり=1, 0s0b = 2
    		if(s == 0 && b == 0) {
    			System.out.println("result: はずれ");
-   			resultMsg= "はずれ";
+   			result= "はずれ";
    			finalResult = 0;
-   			if(k == 10) {
+   			if(gameCount == 10) {
    				//포인트 지급 메소드
-   				point= givePoint(finalResult, point, k);
+   				point= givePoint(finalResult, point, gameCount);
    			}
    		}else if(s == 3){
    			System.out.println("result: 当たり");
-   			resultMsg= "当たり";
+   			result= "当たり";
    			finalResult = 1;
    			//포인트 지급 메소드
-   			point= givePoint(finalResult, point, k);
+   			point= givePoint(finalResult, point, gameCount);
    		}else {
    			System.out.println(s+ "S" + b + "B");
-   			resultMsg= s+ "S" + b + "B";
+   			result= s+ "S" + b + "B";
    			finalResult = 2;
-   			if(k == 10) {
+   			if(gameCount == 10) {
    				//포인트 지급 메소드
-   				point= givePoint(finalResult, point, k);
+   				point= givePoint(finalResult, point, gameCount);
    			}
    		}
 
-   		if(point >= 0 && k == 10) {
-   			flag = 1;
-   			System.out.println("gameCount: " + k + "gameActFlg" + flag);
+   		if(point >= 0 && gameCount == 10) {
+   			gameActFlg = 1;
+   			System.out.println("gameCount: " + gameCount + "gameActFlg" + gameActFlg);
+
    		}
+   		gameDto.setResult(result);
    		
+   		gameDto.setPoint(currentPoint + point);
+   		gameDto.setGameCount(gameCount);
+   		gameDto.setGameActFlg(gameActFlg);
 	}
-   	
-   	//2. ゲーム結果履歴情報テーブル追加
-   	
-   	
-	//3. ポイント情報テーブル更新
-   	
+
    	//point give method
-   	public int givePoint(int finalResult, int point, int k) {
+   	private int givePoint(int finalResult, int point, int gameCount) {
    		if(finalResult == 0) {
    			point = 0;
    		}else if(finalResult == 1) {
-   			if(k <= 5) {
+   			if(gameCount <= 5) {
    				point = 1000;
-   			}else if(k <= 7) {
+   			}else if(gameCount <= 7) {
    				point = 500;
-   			}point = 200;
+   			}else if(gameCount <= 10)point = 200;
+   		}else{
+   			point = 0;
    		}
    		System.out.println("point: " + point);
    		return point;
    	}
-
 }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class GameDTO {
 	//PointInfo table resource management
 	private String memberId;     

@@ -9,5 +9,7 @@ import com.ksinfo.pointgame.dto.GameDTO;
 public interface PointDAO {
 	GameDTO getPointById(@Param("memberId") String memberId);
 
-	int setPointById(GameDTO gameDto);
+	int setPointById(@Param("memberId") String memberId, GameDTO gameDto);
+
+	int setAddPointById(@Param("memberId") String memberId, @Param("point")int point, @Param("gameCount")int gameCount, @Param("gameActFlg")int gameActFlg);
 }

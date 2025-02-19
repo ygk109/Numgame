@@ -125,6 +125,7 @@ public class GameService {
     	
     	//3. ポイント情報テーブル更新
     	int updatePointInfo = pointDao.setAddPointById(memberId, point, gameCount, gameActFlg);
+    	System.out.println("updatePointInfo point: " + point + "gameCount: " + gameCount + "gameActFlg: " + gameActFlg);
     	if(updatePointInfo > 0) {
     		System.out.println("(Update Point)SQL Update Success");
     		gameDto.setPoint(point);

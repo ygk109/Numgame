@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/css/gameplay.css" />
   </head>
   <body>
-    <form action="/gameplay" method="get" class="gamePlay">
-      <div class="container">
+    <form action="/gameplay" method="post" class="gamePlay">
+      <div name="gameDto" class="container">
         <div class="title">
           数当てゲーム
           <button class="closeBtn">X</button>
@@ -25,8 +25,9 @@
           </div>
 
           <div class="inputNum">
-            <label>入力数字</label><input class="num" type="text" maxlength="3" required />
-            <button class="checkBtn" id="checkBtn">確認</button>
+            <label>入力数字</label><input name="inputNum" class="num" type="text" maxlength="3" required />
+            <!-- inputNum type Check -->
+            <button type="submit" class="checkBtn" id="checkBtn">確認</button>
           </div>
 
           <!-- game result table -->
@@ -47,4 +48,5 @@
       </div>
     </form>
   </body>
+  <script></script>
 </html>

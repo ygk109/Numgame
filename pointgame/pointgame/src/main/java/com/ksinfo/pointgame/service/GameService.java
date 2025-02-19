@@ -98,4 +98,89 @@ public class GameService {
         System.out.println("생성된 난수번호:" + digits[0] + digits[1] + digits[2]);
         return "" + digits[0] + digits[1] + digits[2]; // String으로 변환하여 저장
     }
+    
+  //game result check method
+   	public String checkNum(String inputNum, String hiddenNum, int gameCount, int gameActFlg){
+   		int i;
+   		int j;
+   		int s= 0;
+   		int b= 0;
+   		int k= gameCount;
+   		int flag = gameActFlg;
+   		int finalResult;
+   		int point= 0;
+   		
+   		char[] input = new char[3];
+   		char[] hidden = new char[3];
+   		//game judge
+   		for(i=0; i<3; i++) {
+   			input[i]= inputNum.charAt(i);
+   		}
+   		
+   		for(j=0; j<3; j++) {
+   			hidden[j]= hiddenNum.charAt(j);
+   		}
+   		
+   		
+   		for(i=0; i<3; i++) {
+   			
+   			for(j=0; j<3; j++) {
+   				if(input[i] == hidden[j]) {
+   					if(i==j) {
+   						s++;
+   					}else {
+   						b++;
+   					}
+   				}
+   			}
+   		}
+   		//はずれ=0, 当たり=1, 0s0b = 2
+   		if(s == 0 && b == 0) {
+   			System.out.println("result: はずれ");
+   			finalResult = 0;
+   			if(k == 10) {
+   				//포인트 지급 메소드
+   				point= givePoint(finalResult, point, k);
+   			}
+   		}else if(s == 3){
+   			System.out.println("result: 当たり");
+   			finalResult = 1;
+   			//포인트 지급 메소드
+   			point= givePoint(finalResult, point, k);
+   		}else {
+   			System.out.println(s+ "S" + b + "B");
+   			finalResult = 2;
+   			if(k == 10) {
+   				//포인트 지급 메소드
+   				point= givePoint(finalResult, point, k);
+   			}
+   		}
+
+   		if(point >= 0 && k == 10) {
+   			flag = 1;
+   		}
+   		
+		return "point: " + point + "gameCount: " + k + "gameActFlg: " + flag ;
+	}
+   	
+   	//GameResult table update
+	
+	//Point table update
+   	
+   	//point give method
+   	public int givePoint(int finalResult, int point, int k) {
+   		if(finalResult == 0) {
+   			point = 0;
+   		}else if(finalResult == 1) {
+   			if(k <= 5) {
+   				point = 1000;
+   			}else if(k <= 7) {
+   				point = 500;
+   			}point = 200;
+   		}
+   		System.out.println("point: " + point);
+   		return point;
+   	}
+    
+    
 }

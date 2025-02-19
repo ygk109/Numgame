@@ -42,11 +42,12 @@ public class GameController {
     }
     
     @PostMapping("/gameplay")
-    public String gamePlay(@SessionAttribute("gameDto")GameDTO sessionGameDto, @ModelAttribute GameDTO gameDto, @RequestParam("memberId") String memberId, Model model) {
+    public String gamePlay(@SessionAttribute("gameDto")GameDTO sessionGameDto,@ModelAttribute GameDTO gameDto, @RequestParam("memberId") String memberId, Model model) {
+    	gameDto.setMemberId(memberId);
     	model.addAttribute("point", sessionGameDto.getPoint());
     	model.addAttribute("gameResult", sessionGameDto.getGameResult());
     	model.addAttribute("hiddenNum", sessionGameDto.getHiddenNum());
-    	//
+    	
     	int gameCount = sessionGameDto.getGameCount() + 1;
     	System.out.println("Game Count: " + gameCount);
     	int gameActFlg = sessionGameDto.getGameActFlg();
@@ -55,7 +56,8 @@ public class GameController {
     	System.out.println("Hidden Number: "+ sessionGameDto.getHiddenNum());
     	System.out.println("User input Number: " + inputNum);
     	
-    	String gameResultCheck = gameService.checkNum(inputNum, sessionGameDto.getHiddenNum(), gameCount, gameActFlg);
+    	//result check method
+    	gameService.checkNum(gameDto, inputNum, sessionGameDto.getHiddenNum(), gameCount, gameActFlg);
     	
     	return "gameplay";
     }

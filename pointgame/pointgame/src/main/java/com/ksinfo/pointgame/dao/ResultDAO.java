@@ -10,4 +10,5 @@ import com.ksinfo.pointgame.dto.GameDTO;
 @Mapper
 public interface ResultDAO {
 	List<GameDTO> getResultById(@Param("memberId")String memberId);
+	List<GameDTO> setResultById(@Param("memberId")String memberId);
 }

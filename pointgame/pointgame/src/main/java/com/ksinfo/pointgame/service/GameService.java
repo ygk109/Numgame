@@ -29,7 +29,6 @@ public class GameService {
 		String hiddenNum = gameDto.getHiddenNum();
 		LocalDateTime updateDate = gameDto.getUpdateDate();
 		System.out.println("dto에 저장된 id: "+ memberId);
-		
 		//1.1)ポイント情報テーブル検索
 		GameDTO pointSearchResult = pointDao.getPointById(memberId);
 		System.out.println("pointSearch result: "+pointSearchResult);
@@ -96,11 +95,12 @@ public class GameService {
             used[num] = true;
         }
         System.out.println("생성된 난수번호:" + digits[0] + digits[1] + digits[2]);
-        return "" + digits[0] + digits[1] + digits[2]; // String으로 변환하여 저장
+        return "" + digits[0] + digits[1] + digits[2];
     }
+
     
   //game result check method
-   	public String checkNum(String inputNum, String hiddenNum, int gameCount, int gameActFlg){
+   	public void checkNum(GameDTO gameDto, String inputNum, String hiddenNum, int gameCount, int gameActFlg){
    		int i;
    		int j;
    		int s= 0;
@@ -109,9 +109,12 @@ public class GameService {
    		int flag = gameActFlg;
    		int finalResult;
    		int point= 0;
+   		String resultMsg;
    		
    		char[] input = new char[3];
    		char[] hidden = new char[3];
+   		
+   		System.out.println(k + flag);
    		//game judge
    		for(i=0; i<3; i++) {
    			input[i]= inputNum.charAt(i);
@@ -137,6 +140,7 @@ public class GameService {
    		//はずれ=0, 当たり=1, 0s0b = 2
    		if(s == 0 && b == 0) {
    			System.out.println("result: はずれ");
+   			resultMsg= "はずれ";
    			finalResult = 0;
    			if(k == 10) {
    				//포인트 지급 메소드
@@ -144,11 +148,13 @@ public class GameService {
    			}
    		}else if(s == 3){
    			System.out.println("result: 当たり");
+   			resultMsg= "当たり";
    			finalResult = 1;
    			//포인트 지급 메소드
    			point= givePoint(finalResult, point, k);
    		}else {
    			System.out.println(s+ "S" + b + "B");
+   			resultMsg= s+ "S" + b + "B";
    			finalResult = 2;
    			if(k == 10) {
    				//포인트 지급 메소드
@@ -158,14 +164,15 @@ public class GameService {
 
    		if(point >= 0 && k == 10) {
    			flag = 1;
+   			System.out.println("gameCount: " + k + "gameActFlg" + flag);
    		}
    		
-		return "point: " + point + "gameCount: " + k + "gameActFlg: " + flag ;
 	}
    	
-   	//GameResult table update
-	
-	//Point table update
+   	//2. ゲーム結果履歴情報テーブル追加
+   	
+   	
+	//3. ポイント情報テーブル更新
    	
    	//point give method
    	public int givePoint(int finalResult, int point, int k) {
@@ -181,6 +188,5 @@ public class GameService {
    		System.out.println("point: " + point);
    		return point;
    	}
-    
-    
+
 }

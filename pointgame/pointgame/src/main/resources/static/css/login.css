@@ -17,6 +17,7 @@
   border: 1px solid black;
 }
 
+/* login-form-css */
 .container .loginForm {
   display: flex;
   flex-direction: column;
@@ -29,6 +30,35 @@
   border: 1px solid black;
 }
 
+.container .loginForm .input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.container .loginForm .input label {
+  width: 30%;
+  text-align: left;
+  margin-left: 10%;
+}
+
+.container .loginForm input {
+  width: 60%;
+  text-align: left;
+  margin-right: 10%;
+}
+
+.container .loginForm .input .userId {
+  width: 45%;
+  margin-left: 10%;
+}
+.container .loginForm .input .userPw {
+  width: 45%;
+  margin-left: 5%;
+}
+
+/* button-css */
 .container .loginForm .loginBtn {
   margin-top: 5%;
   background-color: greenyellow;
@@ -44,21 +74,4 @@
   width: 80%;
   height: 20%;
   border: 0.5px solid black;
-}
-
-.container .loginForm .input {
-  display: flex;
-  width: 100%;
-  text-align: left;
-  margin-left: 20%;
-  margin-top: 2%;
-}
-
-.container .loginForm .input .userId {
-  width: 45%;
-  margin-left: 10%;
-}
-.container .loginForm .input .userPw {
-  width: 45%;
-  margin-left: 5%;
 }

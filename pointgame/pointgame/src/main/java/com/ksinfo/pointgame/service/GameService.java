@@ -231,7 +231,7 @@ public class GameService {
    		gameDto.setPoint(currentPoint + point);
    		
    		System.out.println("--------checkNum 실행후 결과값----------");
-   		System.out.println("checkNum 메소드 실행 후 currentPoint" + currentPoint + "지급 point" + point);
+   		System.out.println("checkNum 메소드 실행 후 currentPoint: " + currentPoint + "지급 point: " + point);
    		System.out.println("checkNum 메소드 실행 후 합산point: "+ gameDto.getPoint());
    		
    		gameDto.setGameCount(gameCount);

@@ -48,14 +48,28 @@
           </table>
         </div>
       </div>
+      <!-- message part -->
+      <div class="msg-container" display="none">
+        <div class="title" id="msgTitle">
+          結果
+          <button class="closeBtn">X</button>
+        </div>
+        <input type="hidden" id="msg" th:value="${msg}" />
+        <div><span class="msg-form" id="finishMsg" display="none" th:value="${finishMsg}"></span></div>
+      </div>
     </form>
   </body>
   <script>
+    const msgContainer = document.getElementById("msg-container");
+    const msgTitle = document.getElementById("msgTitle");
     const msg = document.getElementById("msg");
     const msgValue = msg.value;
+    const finishMsg = document.getElementById("finishMsg");
 
     function openMsg() {
-      window.open("/msg", "popupWindow", "width=400,height=300");
+      msgContainer.style.display = "flex";
+      msgTitle.style.display = "flex";
+      finishMsg.style.display = "flex";
     }
 
     if (msgValue == 1) {

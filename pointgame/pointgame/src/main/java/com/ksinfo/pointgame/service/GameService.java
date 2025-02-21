@@ -42,7 +42,7 @@ public class GameService {
 		
 		//1.3)レコード更新日が一致しない場合の処理	
 		if(pointSearchResult != null) {
-			if(updateDate.toLocalDate().equals(LocalDate.now())) {
+			if(!updateDate.toLocalDate().equals(LocalDate.now())) {
 				gameCount = 0;
 				gameActFlag = 0;
 				hiddenNum = createNum();
@@ -51,8 +51,9 @@ public class GameService {
 				gameDto.setGameCount(gameCount);
 				gameDto.setGameActFlg(gameActFlag);
 				gameDto.setHiddenNum(hiddenNum);
+				System.out.println("새로 생성된 hiddenNum:" + hiddenNum);
 				
-				int updateResult = pointDao.setPointById(memberId, gameDto);
+				int updateResult = pointDao.setPointById(memberId, gameCount, gameActFlag, hiddenNum);
 				//1.4) SQL状態が >0(正常)でない場合、メッセージ出力
 				if(updateResult > 0) {
 					System.out.println("Update Success");
@@ -109,6 +110,7 @@ public class GameService {
     	int currentPoint = gameDto.getPoint();
    		int gameCount = gameDto.getGameCount()+1;
    		int gameActFlg = gameDto.getGameActFlg();
+   		List<GameDTO> gameResult = gameDto.getGameResult();
    		
    		System.out.println("checkNum 처리 전 currentPoint: " + currentPoint);
     	//game result check method
@@ -117,7 +119,6 @@ public class GameService {
     	int updatedPoint = gameDto.getPoint();
     	
     	System.out.println("GameService updatedPoint: "+ updatedPoint);
-    	
         System.out.println("----Inserting game result into DB:----");
         System.out.println("Member ID: " + memberId);
         System.out.println("Game Count: " + gameCount);
@@ -142,7 +143,13 @@ public class GameService {
     	}else {
     		System.out.println("(Update Point)システムエラーが発生しました。");
     	}
+    	//4. 取得したデータを返却し処理を終了する。
+    	gameResult = resultDao.getResultById(memberId);
+		gameDto.setGameResult(gameResult);
     	
+	    if(gameDto.getGameActFlg() == 1 ) {
+	    	System.out.println("game result pop-up msg");
+	    }
     }
   
   //game result check method
@@ -211,17 +218,22 @@ public class GameService {
    			}
    		}
 
-   		if(point >= 0 && gameCount == 10 && finalResult == 1) {
+   		if(point >= 0 && gameCount == 10) {
    			gameActFlg = 1;
-   			System.out.println("gameCount: " + gameCount + "gameActFlg" + gameActFlg);
+   			System.out.println("gameCount: " + gameCount + "gameActFlg: " + gameActFlg);
 
+   		}else if(finalResult == 1) {
+   			gameActFlg = 1;
+   			System.out.println("finalResult: "+ finalResult + "gameActFlg: " + gameActFlg);
    		}
+   		gameDto.setRewardPoint(point);
    		gameDto.setResult(result);
    		gameDto.setPoint(currentPoint + point);
    		
    		System.out.println("--------checkNum 실행후 결과값----------");
    		System.out.println("checkNum 메소드 실행 후 currentPoint" + currentPoint + "지급 point" + point);
    		System.out.println("checkNum 메소드 실행 후 합산point: "+ gameDto.getPoint());
+   		
    		gameDto.setGameCount(gameCount);
    		System.out.println("checkNum 메소드 실행 후 gameCount: "+ gameDto.getGameCount());
    		gameDto.setGameActFlg(gameActFlg);

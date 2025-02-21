@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 public class GameDTO {
 	//PointInfo table resource management
 	private String memberId;     
-    private int point;           
+    private int point; 
+    private int rewardPoint = 0;
+    
     private String hiddenNum;    
     private int gameCount;       
     private int gameActFlg;      
@@ -95,6 +97,14 @@ public class GameDTO {
 	}
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public int getRewardPoint() {
+		return rewardPoint;
+	}
+
+	public void setRewardPoint(int rewardPoint) {
+		this.rewardPoint = rewardPoint;
 	}       
     
     

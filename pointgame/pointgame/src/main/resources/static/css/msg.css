@@ -1,0 +1,51 @@
+.msg-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 30%;
+  height: 20%;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(19, 19, 19);
+}
+
+.msg-container .title {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: green;
+  font-weight: bold;
+  width: 100%;
+  height: 30px;
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.msg-container .title button {
+  background-color: rgb(191, 191, 191);
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+
+  width: 10%;
+  height: 80%;
+  border-radius: 0.5rem;
+  border: 1px solid gray;
+}
+
+.msg-container .title button:hover {
+  background-color: gray;
+}

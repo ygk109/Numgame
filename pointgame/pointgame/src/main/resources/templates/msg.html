@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pop-up msg</title>
+    <link rel="stylesheet" href="/css/msg.css" />
+  </head>
+  <body>
+    <div class="msg-container">
+      <div class="title">
+        結果
+        <button class="closeBtn">X</button>
+      </div>
+      <input type="hidden" id="msg" th:value="${msg}" />
+      <div><span class="msg-form" id="finishMsg" th:value="${finishMsg}"></span></div>
+    </div>
+  </body>
+  <script>
+    const msg = document.getElementById("msg");
+    if (msg.value == 1) {
+    }
+  </script>
+</html>

@@ -67,8 +67,21 @@ public class GameController {
     	
     	session.setAttribute("gameDto", gameDto);
     	
+    	//pointInfo, gameResult List view
     	model.addAttribute("point", gameDto.getPoint());
-    	model.addAttribute("result", gameDto.getGameResult());
+    	model.addAttribute("gameResult", gameDto.getGameResult());
+    	
+    	//game finish Msg
+    	if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() > 0) {
+    		System.out.println("Controller gameActFlg: "+ gameDto.getGameActFlg());
+    		String msg = "挑戦に成功しました。" + gameDto.getRewardPoint() + "ポイント支給";
+    		model.addAttribute("msg", 1);
+    		model.addAttribute("finishMsg", msg);
+    	}else if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() == 0) {
+    		String msg = "挑戦に失敗しました";
+    		model.addAttribute("msg", 1);
+    		model.addAttribute("finishMsg", msg);
+    	}
     	
     	return "gameplay";
     }

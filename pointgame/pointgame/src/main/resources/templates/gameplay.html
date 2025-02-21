@@ -16,6 +16,7 @@
         <div class="gameForm">
           <div class="point">
             <input type="hidden" name="memberId" th:value="${gameDto.memberId}" />
+            <input id="msg" type="hidden" th:value="${msg}" />
 
             <p>現在のポイント: <span th:text="${gameDto.point}"></span></p>
           </div>
@@ -49,5 +50,16 @@
       </div>
     </form>
   </body>
-  <script></script>
+  <script>
+    const msg = document.getElementById("msg");
+    const msgValue = msg.value;
+
+    function openMsg() {
+      window.open("/msg", "popupWindow", "width=400,height=300");
+    }
+
+    if (msgValue == 1) {
+      openMsg();
+    }
+  </script>
 </html>

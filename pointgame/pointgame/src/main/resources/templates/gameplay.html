@@ -15,13 +15,14 @@
         </div>
         <div class="gameForm">
           <div class="point">
-            <input type="hidden" name="memberId" th:value="${memberId}" />
-            <p>現在のポイント: <span th:text="${point}"></span></p>
+            <input type="hidden" name="memberId" th:value="${gameDto.memberId}" />
+
+            <p>現在のポイント: <span th:text="${gameDto.point}"></span></p>
           </div>
           <div class="inputHiddenNum">
             <label>隠れ数字</label>
             <a>***</a>
-            <input name="hiddenNum" th:value="${hiddenNum}" class="hiddenNum" type="hidden" required />
+            <input name="hiddenNum" th:value="${gameDto.hiddenNum}" class="hiddenNum" type="hidden" required />
           </div>
 
           <div class="inputNum">

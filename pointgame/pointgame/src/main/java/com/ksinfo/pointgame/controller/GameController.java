@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.ksinfo.pointgame.dto.GameDTO;
 import com.ksinfo.pointgame.service.GameService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/")
 @SessionAttributes("gameDto")
@@ -22,13 +24,15 @@ public class GameController {
     GameService gameService;
     
     @GetMapping("/gameinit")
-    public String gameInit(@RequestParam("memberId") String memberId, Model model) {
+    public String gameInit(@RequestParam("memberId") String memberId, Model model, HttpSession session) {
     	GameDTO gameDto = new GameDTO();
     	gameDto.setMemberId(memberId);
     	gameService.gameInfoInit(gameDto);
     	
     	model.addAttribute("gameDto", gameDto);
-    	
+
+        session.setAttribute("gameDto", gameDto);
+        
     	//point information viewing
     	model.addAttribute("point", gameDto.getPoint());
         System.out.println("Controller Point: "+ gameDto.getPoint());
@@ -42,19 +46,17 @@ public class GameController {
     }
     
     @PostMapping("/gameplay")
-    public String gamePlay(@SessionAttribute("gameDto")GameDTO sessionGameDto,@ModelAttribute GameDTO gameDto, @RequestParam("memberId") String memberId, Model model) {
-    	gameDto.setMemberId(memberId);
-    	model.addAttribute("point", sessionGameDto.getPoint());
-    	model.addAttribute("gameResult", sessionGameDto.getGameResult());
-    	model.addAttribute("hiddenNum", sessionGameDto.getHiddenNum());
+    public String gamePlay(@RequestParam("memberId") String memberId, @RequestParam("inputNum") String inputNum, Model model, HttpSession session) {
+    	GameDTO gameDto = (GameDTO) session.getAttribute("gameDto");
+    	gameDto.setInputNum(inputNum);
     	
-    	gameDto.setGameCount(sessionGameDto.getGameCount());
-    	gameDto.setGameActFlg(sessionGameDto.getGameActFlg());
-    	gameDto.setHiddenNum(sessionGameDto.getHiddenNum());
-    	String inputNum = gameDto.getInputNum();
+    	model.addAttribute("point", gameDto.getPoint());
+    	model.addAttribute("hiddenNum", gameDto.getHiddenNum());
     	
-    	System.out.println("Hidden Number: "+ sessionGameDto.getHiddenNum());
-    	System.out.println("User input Number: " + inputNum);
+    	System.out.println("gameDto값 확인:" + gameDto);
+    	System.out.println("gameDto memberId 값" + gameDto.getMemberId());
+    	System.out.println("Hidden Number of gameDTO: "+ gameDto.getHiddenNum());
+    	System.out.println("User input Number of gameDTO: " + gameDto.getInputNum());
     	
     	//game result viewing
         model.addAttribute("gameResult", gameDto.getGameResult());
@@ -63,8 +65,10 @@ public class GameController {
     	//result check service
     	gameService.gamePlay(gameDto);
     	
-    	model.addAttribute("gameResult", gameDto.getGameResult());
+    	session.setAttribute("gameDto", gameDto);
+    	
     	model.addAttribute("point", gameDto.getPoint());
+    	model.addAttribute("result", gameDto.getGameResult());
     	
     	return "gameplay";
     }

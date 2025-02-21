@@ -14,15 +14,9 @@
 		AND logical_del_flag='0' 									
     </select>
     
-    <update id="setResultById">
-	    UPDATE RESULTINFO				
-		SET game_count = 1
-		  , input_num = '156'
-		  , result = '1S'
-		  , update_date= now()
-		WHERE member_id='123456'				
-		AND DATE(update_date) = current_date				
-		AND logical_del_flag='0'; 			
-    </update>
+<insert id="setResultById">
+    INSERT INTO RESULTINFO (member_id, game_count, input_num, result, update_date, logical_del_flag)
+    VALUES (#{memberId}, #{gameCount}, #{inputNum}, #{result}, NOW(), '0')
+</insert>
     		
 </mapper>

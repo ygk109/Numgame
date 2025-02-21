@@ -50,11 +50,11 @@
 }
 
 .container .loginForm .input .userId {
-  width: 45%;
-  margin-left: 10%;
+  width: 50%;
+  margin-left: 5%;
 }
 .container .loginForm .input .userPw {
-  width: 45%;
+  width: 50%;
   margin-left: 5%;
 }
 

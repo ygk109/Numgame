@@ -75,12 +75,14 @@ public class GameController {
     	if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() > 0) {
     		System.out.println("Controller gameActFlg: "+ gameDto.getGameActFlg());
     		String msg = "挑戦に成功しました。" + gameDto.getRewardPoint() + "ポイント支給";
-    		model.addAttribute("msg", 1);
+    		model.addAttribute("msg", "1");
     		model.addAttribute("finishMsg", msg);
+    		System.out.println(msg);
     	}else if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() == 0) {
     		String msg = "挑戦に失敗しました";
-    		model.addAttribute("msg", 1);
+    		model.addAttribute("msg", "1");
     		model.addAttribute("finishMsg", msg);
+    		System.out.println(msg);
     	}
     	
     	return "gameplay";

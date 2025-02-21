@@ -49,13 +49,13 @@
         </div>
       </div>
       <!-- message part -->
-      <div class="msg-container" display="none">
+      <div class="msg-container" id="msg-container">
         <div class="title" id="msgTitle">
           結果
-          <button class="closeBtn">X</button>
+          <button class="closeBtn" id="closeBtn">X</button>
         </div>
         <input type="hidden" id="msg" th:value="${msg}" />
-        <div><span class="msg-form" id="finishMsg" display="none" th:value="${finishMsg}"></span></div>
+        <div><span class="msg-form" id="finishMsg" th:value="${finishMsg}"></span></div>
       </div>
     </form>
   </body>
@@ -65,15 +65,23 @@
     const msg = document.getElementById("msg");
     const msgValue = msg.value;
     const finishMsg = document.getElementById("finishMsg");
+    const closeBtn = document.getElementById("closeBtn");
 
     function openMsg() {
       msgContainer.style.display = "flex";
-      msgTitle.style.display = "flex";
-      finishMsg.style.display = "flex";
+      msgContainer.style.flexDirection = "column";
+      msgContainer.style.justifyContent = "center";
+      msgContainer.style.alignItems = "center";
+      finishMsg.style.display = "block";
     }
 
     if (msgValue == 1) {
       openMsg();
     }
+
+    function closeMsg() {
+      msgContainer.style.display = "none";
+    }
+    closeBtn.addEventListener("click", closeMsg);
   </script>
 </html>

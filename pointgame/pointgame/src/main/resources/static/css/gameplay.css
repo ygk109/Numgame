@@ -117,7 +117,7 @@
 }
 
 .msg-container .title {
-  display: none;
+  display: flex;
   background-color: white;
   justify-content: center;
   text-align: center;

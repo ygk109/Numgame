@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/css/gameplay.css" />
   </head>
   <body>
-    <form action="/gameplay" method="post" class="gamePlay">
+    <form action="/gameplay" method="post" class="gamePlay" onsubmit="return checkInput()">
       <div name="gameDto" class="container">
         <div class="title">
           数当てゲーム
-          <button class="closeBtn">X</button>
+          <button type="button" class="closeBtn" id="gameCloseBtn">X</button>
         </div>
         <div class="gameForm">
           <div class="point">
@@ -27,7 +27,8 @@
           </div>
 
           <div class="inputNum">
-            <label>入力数字</label><input name="inputNum" class="num" type="text" maxlength="3" required />
+            <label>入力数字</label>
+            <input name="inputNum" class="num" id="inputNum" type="text" maxlength="3" required />
             <!-- inputNum type Check -->
             <button type="submit" class="checkBtn" id="checkBtn">確認</button>
           </div>
@@ -55,18 +56,33 @@
           <button class="closeBtn" id="closeBtn">X</button>
         </div>
         <input type="hidden" id="msg" th:value="${msg}" />
-        <div><span class="msg-form" id="finishMsg" th:value="${finishMsg}"></span></div>
+        <div><span class="msg-form" id="finishMsg" th:text="${finishMsg}"></span></div>
       </div>
     </form>
   </body>
   <script>
+    const gameCloseBtn = document.getElementById("gameCloseBtn");
+
     const msgContainer = document.getElementById("msg-container");
     const msgTitle = document.getElementById("msgTitle");
     const msg = document.getElementById("msg");
     const msgValue = msg.value;
     const finishMsg = document.getElementById("finishMsg");
-    const closeBtn = document.getElementById("closeBtn");
 
+    const closeBtn = document.getElementById("closeBtn");
+    const inputNum = document.getElementById("inputNum");
+    const checkBtn = document.getElementById("checkBtn");
+
+    //game close fcuntion
+    function gameClose() {
+      const confirmed = confirm("ゲームを終了しますか");
+      if (confirmed) {
+        window.location.href = "/login";
+      }
+    }
+    gameCloseBtn.addEventListener("click", gameClose);
+
+    //pop-up message function
     function openMsg() {
       msgContainer.style.display = "flex";
       msgContainer.style.flexDirection = "column";
@@ -75,13 +91,22 @@
       finishMsg.style.display = "block";
     }
 
-    if (msgValue == 1) {
+    if (msgValue == "1") {
       openMsg();
     }
 
     function closeMsg() {
       msgContainer.style.display = "none";
+      inputNum.disabled = true;
+      checkBtn.disabled = true;
     }
     closeBtn.addEventListener("click", closeMsg);
+
+    function checkInput() {
+      if (inputNum.disabled == true) {
+        return false;
+      }
+      return true;
+    }
   </script>
 </html>

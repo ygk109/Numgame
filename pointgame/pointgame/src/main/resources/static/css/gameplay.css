@@ -22,13 +22,16 @@
 }
 
 .container .title button {
-  background-color: gray;
+  background-color: rgb(191, 191, 191);
   font-weight: bold;
   position: absolute;
   right: 5px;
   width: 5%;
   height: 100%;
   border: 1px solid gray;
+}
+.container .title button:hover {
+  background-color: gray;
 }
 
 .container .gameForm {
@@ -100,6 +103,8 @@
 /* message css */
 .msg-container {
   display: none;
+  background-color: white;
+
   flex-direction: column;
   justify-content: center;
   text-align: center;

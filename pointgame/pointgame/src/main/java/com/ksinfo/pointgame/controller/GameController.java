@@ -42,11 +42,19 @@ public class GameController {
         model.addAttribute("gameResult", gameDto.getGameResult());
         System.out.println("gameResult List: "+ gameDto.getGameResult());
         
+        //game finish history = 1 case 
+        if(gameDto.getGameActFlg() == 1) {
+    		String msg = "今日のゲームチャンスは終わりました。";
+    		model.addAttribute("msg", "1");
+    		model.addAttribute("finishMsg", msg);
+    		System.out.println(msg);
+        }
+        
     	return "gameplay";
     }
     
     @PostMapping("/gameplay")
-    public String gamePlay(@RequestParam("memberId") String memberId, @RequestParam("inputNum") String inputNum, Model model, HttpSession session) {
+    public String gamePlay(@RequestParam("memberId") String memberId, @RequestParam(value = "inputNum", required = false) String inputNum, Model model, HttpSession session) {
     	GameDTO gameDto = (GameDTO) session.getAttribute("gameDto");
     	gameDto.setInputNum(inputNum);
     	
@@ -74,12 +82,12 @@ public class GameController {
     	//game finish Msg
     	if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() > 0) {
     		System.out.println("Controller gameActFlg: "+ gameDto.getGameActFlg());
-    		String msg = "挑戦に成功しました。" + gameDto.getRewardPoint() + "ポイント支給";
+    		String msg = "挑戦に成功しました! " + gameDto.getRewardPoint() + " ポイント支給";
     		model.addAttribute("msg", "1");
     		model.addAttribute("finishMsg", msg);
     		System.out.println(msg);
     	}else if(gameDto.getGameActFlg() == 1 && gameDto.getRewardPoint() == 0) {
-    		String msg = "挑戦に失敗しました";
+    		String msg = "挑戦に失敗しました。";
     		model.addAttribute("msg", "1");
     		model.addAttribute("finishMsg", msg);
     		System.out.println(msg);

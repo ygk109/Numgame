@@ -28,17 +28,41 @@ public class GameService {
 		int gameActFlag = gameDto.getGameActFlg();
 		String hiddenNum = gameDto.getHiddenNum();
 		LocalDateTime updateDate = gameDto.getUpdateDate();
-		System.out.println("dto에 저장된 id: "+ memberId);
+		String errorMsg = "システムエラーが発生しました。";
+		
+		System.out.println("Saved dto id: "+ memberId);
 		
 		//1.1)ポイント情報テーブル検索
 		GameDTO pointSearchResult = pointDao.getPointById(memberId);
-		System.out.println("pointSearch result: "+pointSearchResult);
+		//Search point
 		point = pointSearchResult.getPoint();
-		System.out.println("GameService 조회한 point: " + point);
+		System.out.println("DB Search point: " + point);
+		
 		gameDto.setPoint(point);
-		System.out.println("DTO 저장된 point: " + gameDto.getPoint());
+		System.out.println("Saving DTO point: " + gameDto.getPoint());
+		
+		//Search gameCount
+		gameCount = pointSearchResult.getGameCount();
+		System.out.println("DB Search gameCount: " + gameCount);
+		
+		gameDto.setGameCount(gameCount);
+		System.out.println("Saving DTO gameCount: " + gameDto.getPoint());
+		
+		//Search gameActFlg
+		gameActFlag = pointSearchResult.getGameActFlg();
+		System.out.println("DB Search gameActFlag: " + gameActFlag);
+		
+		gameDto.setGameActFlg(gameActFlag);
+		System.out.println("Saving DTO gameActFlag: " + gameDto.getGameActFlg());
+		
+		//Search hiddenNum
+		hiddenNum = pointSearchResult.getHiddenNum();
+		gameDto.setHiddenNum(hiddenNum);
+		System.out.println("Saving DTO hiddenNum: " + gameDto.getHiddenNum());
+		
+		//Search updateDate
 		updateDate = pointSearchResult.getUpdateDate();
-		gameDto.setUpdateDate(updateDate);
+		gameDto.setUpdateDate(updateDate);		
 		
 		//1.3)レコード更新日が一致しない場合の処理	
 		if(pointSearchResult != null) {
@@ -51,39 +75,42 @@ public class GameService {
 				gameDto.setGameCount(gameCount);
 				gameDto.setGameActFlg(gameActFlag);
 				gameDto.setHiddenNum(hiddenNum);
-				System.out.println("새로 생성된 hiddenNum:" + hiddenNum);
+				System.out.println("Created hiddenNum:" + hiddenNum);
+				System.out.println("Initialized gameActFlg: " + gameDto.getGameActFlg());
 				
 				int updateResult = pointDao.setPointById(memberId, gameCount, gameActFlag, hiddenNum);
+				
 				//1.4) SQL状態が >0(正常)でない場合、メッセージ出力
 				if(updateResult > 0) {
-					System.out.println("Update Success");
+					System.out.println("Initial PointInfo Update Success");
 				}
 				else {
-					String errorMsg = "システムエラーが発生しました。";
 					System.out.println(errorMsg);
 				}
 				
 			}
 			//1.5)レコード更新日が一致する場合の処理
 			else {
-				gameCount = pointSearchResult.getGameCount();
-				gameActFlag = pointSearchResult.getGameActFlg();
-				hiddenNum = pointSearchResult.getHiddenNum();
-				
-				gameDto.setGameCount(gameCount);
-				gameDto.setGameActFlg(gameActFlag);
-				gameDto.setHiddenNum(hiddenNum);
+				/*
+				 * gameCount = pointSearchResult.getGameCount(); gameActFlag =
+				 * pointSearchResult.getGameActFlg(); hiddenNum =
+				 * pointSearchResult.getHiddenNum();
+				 * 
+				 * gameDto.setGameCount(gameCount); gameDto.setGameActFlg(gameActFlag);
+				 * gameDto.setHiddenNum(hiddenNum);
+				 */
 			}
 			//2.1)当日のゲーム入力数、判定結果を取得するため、パラメータ04をして以下の機能を呼び出す。
 			List<GameDTO> gameResult = resultDao.getResultById(memberId);
 			gameDto.setGameResult(gameResult);
 		}
-		//1.2)SQL状態が00(正常)でない場合、メッセージ出力	
+		//1.2)SQL状態が(正常)でない場合、メッセージ出力	
 		else {
-		String errorMsg = "システムエラーが発生しました。";
 		System.out.println(errorMsg);
 		}
+		
 	}
+	
 	//Create random number method
     private String createNum() {
         Random random = new Random();
@@ -98,7 +125,7 @@ public class GameService {
             digits[i] = num;
             used[num] = true;
         }
-        System.out.println("생성된 난수번호:" + digits[0] + digits[1] + digits[2]);
+        System.out.println("Creating hiddenNum:" + digits[0] + digits[1] + digits[2]);
         return "" + digits[0] + digits[1] + digits[2];
     }
 
@@ -149,6 +176,7 @@ public class GameService {
     	
 	    if(gameDto.getGameActFlg() == 1 ) {
 	    	System.out.println("game result pop-up msg");
+	    	
 	    }
     }
   
@@ -162,7 +190,7 @@ public class GameService {
 
    		int finalResult;
    		int currentPoint = gameDto.getPoint();
-   		System.out.println("현재 포인트: "+ currentPoint);
+   		System.out.println("Current Point: "+ currentPoint);
    		int point= 0;
    		
    		char[] input = new char[3];
@@ -230,7 +258,7 @@ public class GameService {
    		gameDto.setResult(result);
    		gameDto.setPoint(currentPoint + point);
    		
-   		System.out.println("--------checkNum 실행후 결과값----------");
+   		System.out.println("--------After checkNum method result----------");
    		System.out.println("checkNum 메소드 실행 후 currentPoint: " + currentPoint + "지급 point: " + point);
    		System.out.println("checkNum 메소드 실행 후 합산point: "+ gameDto.getPoint());
    		

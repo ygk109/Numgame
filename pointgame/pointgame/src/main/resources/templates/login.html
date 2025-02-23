@@ -18,10 +18,11 @@
             <label>パスワード</label><input name="memberPassword" class="userPw" id="userPw" type="password" maxlength="8" placeholder="PW" required />
           </div>
           <button type="submit" class="loginBtn" id="loginBtn">ログイン</button>
-          <p class="message" display="none"></p>
+          <p class="message" id="message" th:text="${error}"></p>
+          <!-- <p class="errorMsg"></p> -->
         </div>
       </div>
     </form>
   </body>
-  <script src="/login.js"></script>
+  <script src="/js/login.js"></script>
 </html>

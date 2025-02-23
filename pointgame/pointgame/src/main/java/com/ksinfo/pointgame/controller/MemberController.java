@@ -33,8 +33,7 @@ public class MemberController {
 	        	return "redirect:/gameinit?memberId=" + memberDto.getMemberId();
 	        	
 	        }else {
-	        	String errorMsg = "入力したID, PWが一致しません。";
-
+	        	String errorMsg = "入力した ID, PWが一致しません。";
 	        	model.addAttribute("error", errorMsg);
 	        	return "login";
 	        }

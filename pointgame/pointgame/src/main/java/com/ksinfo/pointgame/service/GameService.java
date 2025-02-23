@@ -91,14 +91,12 @@ public class GameService {
 			}
 			//1.5)レコード更新日が一致する場合の処理
 			else {
-				/*
-				 * gameCount = pointSearchResult.getGameCount(); gameActFlag =
-				 * pointSearchResult.getGameActFlg(); hiddenNum =
-				 * pointSearchResult.getHiddenNum();
-				 * 
-				 * gameDto.setGameCount(gameCount); gameDto.setGameActFlg(gameActFlag);
-				 * gameDto.setHiddenNum(hiddenNum);
-				 */
+				gameCount = pointSearchResult.getGameCount(); gameActFlag =
+				pointSearchResult.getGameActFlg(); hiddenNum =
+				pointSearchResult.getHiddenNum();
+				 
+				gameDto.setGameCount(gameCount); gameDto.setGameActFlg(gameActFlag);
+				gameDto.setHiddenNum(hiddenNum);
 			}
 			//2.1)当日のゲーム入力数、判定結果を取得するため、パラメータ04をして以下の機能を呼び出す。
 			List<GameDTO> gameResult = resultDao.getResultById(memberId);
@@ -162,8 +160,9 @@ public class GameService {
     	}
     	
     	//3. ポイント情報テーブル更新
-    	int updatePointInfo = pointDao.setAddPointById(memberId, updatedPoint, gameCount, gameActFlg);
-    	System.out.println("updatePointInfo point: " + updatedPoint + "gameCount: " + gameCount + "gameActFlg: " + gameActFlg);
+    	int updatedGameActFlg = gameDto.getGameActFlg();
+    	int updatePointInfo = pointDao.setAddPointById(memberId, updatedPoint, gameCount, updatedGameActFlg);
+    	System.out.println("updatePointInfo point: " + updatedPoint + "gameCount: " + gameCount + "gameActFlg: " + updatedGameActFlg);
     	if(updatePointInfo > 0) {
     		System.out.println("(Update Point)SQL Update Success");
     		gameDto.setPoint(updatedPoint);
@@ -265,7 +264,7 @@ public class GameService {
    		gameDto.setGameCount(gameCount);
    		System.out.println("checkNum 메소드 실행 후 gameCount: "+ gameDto.getGameCount());
    		gameDto.setGameActFlg(gameActFlg);
-   		System.out.println("checkNum 메소드 실행 후 gameActFlg): "+ gameDto.getGameActFlg());
+   		System.out.println("checkNum 메소드 실행 후 gameActFlg: "+ gameDto.getGameActFlg());
 	}
 
    	//point give method

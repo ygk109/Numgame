@@ -25,7 +25,7 @@
   align-items: center;
   background-color: rgb(248, 245, 245);
   width: 25%;
-  height: 20%;
+  height: 25%;
   border: 1px;
   border: 1px solid black;
 }
@@ -44,7 +44,8 @@
 }
 
 .container .loginForm input {
-  width: 60%;
+  width: 65%;
+  height: 30px;
   text-align: left;
   margin-right: 10%;
 }
@@ -74,4 +75,8 @@
   width: 80%;
   height: 20%;
   border: 0.5px solid black;
+}
+
+.container .loginForm .message {
+  color: red;
 }

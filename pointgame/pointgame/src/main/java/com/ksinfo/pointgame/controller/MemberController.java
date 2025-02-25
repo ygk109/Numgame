@@ -25,18 +25,23 @@ public class MemberController {
 	    
 	    @PostMapping("/cert")
 	    public String login(@ModelAttribute MemberDTO memberDto, Model model) {
-	        boolean dbCheck = memberService.login(memberDto);
+	        String dbCheck = memberService.login(memberDto);
 
-	    	if(dbCheck) {
+	    	if("success".equals(dbCheck)) {
 	        	model.addAttribute("memberId", memberDto.getMemberId());
 	        	model.addAttribute("memberPassword", memberDto.getMemberPassword());
 	        	return "redirect:/gameinit?memberId=" + memberDto.getMemberId();
 	        	
-	        }else {
+	        }else if("fail".equals(dbCheck)){
 	        	String errorMsg = "入力した ID, PWが一致しません。";
+	        	model.addAttribute("error", errorMsg);
+	        	return "login";
+	        }else if("error".equals(dbCheck)){
+	        	String errorMsg = "DB接続時にエラーが発生しました。";
 	        	model.addAttribute("error", errorMsg);
 	        	return "login";
 	        }
 	        
+	    	return "login";
 	    }
 	}

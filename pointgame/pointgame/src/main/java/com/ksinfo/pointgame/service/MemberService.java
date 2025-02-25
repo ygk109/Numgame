@@ -11,15 +11,24 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDao;
 	
-	public boolean login(MemberDTO memberDto) {
+	public String login(MemberDTO memberDto) {
 		String memberId = memberDto.getMemberId();
 		String memberPassword = memberDto.getMemberPassword();
 		System.out.println(memberId); //check
 		System.out.println(memberPassword); //check
+		try {
+			Integer loginResult = memberDao.getResultById(memberId, memberPassword);
+			System.out.println(loginResult); //check
+			if(loginResult > 0) {
+				
+				return "success"; 
+			}else{
+				return "fail";
+			}
+		}catch(Exception e) {
+			System.out.println("システムエラーが発生しました。");
+			return "error";
+		}
 		
-		Integer loginResult = memberDao.getResultById(memberId, memberPassword);
-		System.out.println(loginResult); //check
-		
-		return loginResult > 0;
-	};
+	}
 }

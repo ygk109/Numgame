@@ -72,6 +72,13 @@
   margin-left: 10%;
 }
 
+.container .gameForm .errorMsg {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
 .container .gameForm .inputNum .checkBtn {
   background-color: greenyellow;
   width: 70px;

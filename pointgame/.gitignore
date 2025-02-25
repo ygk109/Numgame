@@ -1,1 +1,4 @@
 /.metadata/
+/dist/
+/build/
+*.min.css

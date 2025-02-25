@@ -11,11 +11,9 @@
       <div class="container">
         <div class="title">会員認証</div>
         <div class="loginForm">
+          <div class="input"><label>会員ID</label> <input name="memberId" class="userId" id="userId" type="text" maxlength="6" placeholder="ID" /></div>
           <div class="input">
-            <label>会員ID</label> <input name="memberId" class="userId" id="userId" type="text" maxlength="6" placeholder="ID" required />
-          </div>
-          <div class="input">
-            <label>パスワード</label><input name="memberPassword" class="userPw" id="userPw" type="password" maxlength="8" placeholder="PW" required />
+            <label>パスワード</label><input name="memberPassword" class="userPw" id="userPw" type="password" maxlength="8" placeholder="PW" />
           </div>
           <button type="submit" class="loginBtn" id="loginBtn">ログイン</button>
           <p class="message" id="message" th:text="${error}"></p>

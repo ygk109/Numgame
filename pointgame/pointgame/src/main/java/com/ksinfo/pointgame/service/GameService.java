@@ -13,6 +13,8 @@ import com.ksinfo.pointgame.dao.PointDAO;
 import com.ksinfo.pointgame.dao.ResultDAO;
 import com.ksinfo.pointgame.dto.GameDTO;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class GameService {
 	@Autowired
@@ -33,7 +35,8 @@ public class GameService {
 		System.out.println("Saved dto id: "+ memberId);
 		
 		//1.1)ポイント情報テーブル検索
-		GameDTO pointSearchResult = pointDao.getPointById(memberId);
+		try {
+			GameDTO pointSearchResult = pointDao.getPointById(memberId);
 		//Search point
 		point = pointSearchResult.getPoint();
 		System.out.println("DB Search point: " + point);
@@ -102,11 +105,11 @@ public class GameService {
 			List<GameDTO> gameResult = resultDao.getResultById(memberId);
 			gameDto.setGameResult(gameResult);
 		}
-		//1.2)SQL状態が(正常)でない場合、メッセージ出力	
-		else {
+		
+	//1.2)SQL状態が(正常)でない場合、メッセージ出力	
+	}catch (Exception e) {
 		System.out.println(errorMsg);
 		}
-		
 	}
 	
 	//Create random number method
@@ -128,7 +131,10 @@ public class GameService {
     }
 
     //gamePlay 
+    @Transactional
     public void gamePlay(GameDTO gameDto) {
+   		String errorMsg = "システムエラーが発生しました。";
+    	try {
     	String memberId = gameDto.getMemberId();
     	String inputNum = gameDto.getInputNum();
     	String hiddenNum = gameDto.getHiddenNum();
@@ -136,6 +142,7 @@ public class GameService {
    		int gameCount = gameDto.getGameCount()+1;
    		int gameActFlg = gameDto.getGameActFlg();
    		List<GameDTO> gameResult = gameDto.getGameResult();
+   		
    		
    		System.out.println("checkNum 처리 전 currentPoint: " + currentPoint);
     	//game result check method
@@ -173,9 +180,13 @@ public class GameService {
     	gameResult = resultDao.getResultById(memberId);
 		gameDto.setGameResult(gameResult);
     	
-	    if(gameDto.getGameActFlg() == 1 ) {
-	    	System.out.println("game result pop-up msg");
-	    	
+		    if(gameDto.getGameActFlg() == 1 ) {
+		    	System.out.println("game result pop-up msg");
+		    	
+		    }
+	    
+	    }catch(Exception e) {
+	    	System.out.println(errorMsg);
 	    }
     }
   
